@@ -1,6 +1,4 @@
-const supertest = require('supertest')
-const app = require('../../index')
-const server = supertest(app)
+const server = require('../utils')
 
 describe('Работает ли сервер', () => {
   test('Возвращает код 200 при обращении на "/"', async () => {
@@ -19,5 +17,4 @@ describe('Работает ли сервер', () => {
     const response = await server.get('/')
     expect(response.text).toContain('Welcome');
   });
-
 });
