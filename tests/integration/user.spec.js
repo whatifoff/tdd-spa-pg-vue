@@ -2,26 +2,31 @@ const server = require('../utils')
 const { generateUser } = require('../utils/generate')
 
 describe('Опреации с пользователями', () => {
-  test('Создание нового пользователя (create)', async () => {
-    const fakeUser = generateUser()
-    const response = await server.post('/users').send(fakeUser)
 
-    const newUser = JSON.parse(response.text)
 
-    expect(response.status).toBe(200)
-    expect(newUser.email).toBe(fakeUser.email)
-    expect(newUser.id).toBeDefined()
+  test('Создание нового пользователя (create). Все данные верны - код 200', async () => {
+    // const fakeUser = generateUser()
+
+    // try {
+    //   const response = await server.post('/users').send(fakeUser)
+    //   const newUser = JSON.parse(response.text)
+    //   expect(response.status).toBe(200)
+    //   expect(newUser.email).toBe(fakeUser.email)
+    //   expect(newUser.id).toBeDefined()
+    // } catch (error) {
+    //   throw new Error(error)
+    // }
   });
 
-  test('Получение данных о пользователе (read)', async () => {
+  describe('Получение данных о пользователе (read)', () => {
 
   });
 
-  test('Обновление данных пользователя (update)', async () => {
+  describe('Обновление данных пользователя (update)', () => {
 
   });
 
-  test('Удаление данных пользователя (delete)', async () => {
+  describe('Удаление данных пользователя (delete)', () => {
 
   });
 
