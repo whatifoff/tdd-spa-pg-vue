@@ -17,11 +17,10 @@ module.exports = {
           if (userData) {
             throw new Error('Email dublicate.')
           } else {
-            next()
+            return next()
           }
 
         } catch (error) {
-          // console.log('ErrOr:', error)
           throw new Error(error.message)
         }
 
@@ -33,6 +32,21 @@ module.exports = {
 
     } else {
       throw new Error('Email is required.')
+    }
+  },
+
+
+  validatePassword(req, res, next) {
+    const pass = req.body.password
+
+    if (pass) {
+      if (pass.length < 8) {
+        throw new Error('Password length must be geater 8 symbols.')
+      } else {
+        return next()
+      }
+    } else {
+      throw new Error('Password is required.')
     }
   }
 

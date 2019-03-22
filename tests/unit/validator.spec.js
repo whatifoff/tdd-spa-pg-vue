@@ -56,4 +56,56 @@ describe('Валидатор', () => {
 
   });
 
+  describe('Валидатор пароля', () => {
+    test('Пароль обязателен', () => {
+      const { email } = gen.generateUser()
+      const req = {
+        body: {
+          email
+        }
+      }
+      const res = {}
+      const next = jest.fn()
+
+      try {
+        midwValidator.validatePassword(req, res, next)
+      } catch (error) {
+        expect(error.message).toBe('Password is required.')
+      }
+    });
+
+    test('Длина пароля должна быть не менее 8 символов', () => {
+      const { email } = gen.generateUser()
+      const req = {
+        body: {
+          email,
+          password: '12345'
+        }
+      }
+      const res = {}
+      const next = jest.fn()
+
+      try {
+        midwValidator.validatePassword(req, res, next)
+      } catch (error) {
+        expect(error.message).toBe('Password length must be geater 8 symbols.')
+      }
+    })
+
+    test('Правильный пароль - возврат next()', () => {
+      const { email, password } = gen.generateUser()
+      const req = {
+        body: {
+          email,
+          password
+        }
+      }
+      const res = {}
+      const next = jest.fn()
+
+      midwValidator.validatePassword(req, res, next)
+      expect(next).toHaveBeenCalled()
+
+    })
+  });
 });
