@@ -36,11 +36,17 @@ module.exports = {
       throw new Error(`pg error: ${error}`)
     }
 
-    const newUser = {
-      id: dbResult.rows[0].user_id,
-      email: dbResult.rows[0].user_email
+    let newUser
+
+    if (dbResult.rowCount > 0) {
+      newUser = {
+        id: dbResult.rows[0].user_id,
+        email: dbResult.rows[0].user_email
+      }
+
+      return newUser
     }
 
-    return newUser
+    return null
   }
 }

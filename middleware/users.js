@@ -7,11 +7,7 @@ module.exports = {
 
     let hash
 
-    try {
-      hash = await bcrypt.hash(req.body.password, 10)
-    } catch (error) {
-      throw new Error(`bcrypt error: ${error}`)
-    }
+    hash = await bcrypt.hash(req.body.password, 10)
 
     const newUser = await dbUser.add(req.body.email, hash)
 
