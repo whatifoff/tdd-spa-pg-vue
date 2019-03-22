@@ -4,16 +4,19 @@ const router = require('./routes')
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
+
+const logger = morgan('combined')
 
 const app = express()
 
+app.use(logger)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(router)
 app.use('/public', express.static(path.join(__dirname, 'client')))
 
 app.use((err, req, res, next) => {
-  console.error(err.stack)
   res.status(500).json({
     error: true
   })

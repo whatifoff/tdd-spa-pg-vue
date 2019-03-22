@@ -11,5 +11,8 @@ module.exports = {
       user: 'postgres',
       password: '271421'
     }
+  },
+  hash: {
+    saltRounds: 10
   }
 }

@@ -1,32 +1,60 @@
 const server = require('../utils')
 const { generateUser } = require('../utils/generate')
+const { add } = require('../../db/user')
+const bcrypt = require('bcrypt')
+const saltRounds = require('../../config').hash.saltRounds
+
 
 describe('Опреации с пользователями', () => {
 
-  test('Создание нового пользователя (create). Все данные верны - код 200', async () => {
-    const fakeUser = generateUser()
+  describe('Регистрация нового пользователя', () => {
+    test('Все данные верны - код 200', async () => {
+      const fakeUser = generateUser()
 
-    try {
-      const response = await server.post('/users').send(fakeUser)
-      const newUser = JSON.parse(response.text)
+      try {
+        const response = await server.post('/auth/reg').send(fakeUser)
+        const newUser = JSON.parse(response.text)
+        expect(response.status).toBe(200)
+        expect(newUser.email).toBe(fakeUser.email)
+        expect(newUser.id).toBeDefined()
+      } catch (error) {
+        throw new Error(error)
+      }
+    });
+  });
+
+  describe('Аутентификация пользователя', () => {
+    test('Корректные данные пользователя', async () => {
+      const fakeUser = generateUser()
+
+      const hash = await bcrypt.hash(fakeUser.password, saltRounds)
+      await add(fakeUser.email, hash)
+
+      const response = await server.post('/auth/login').send(fakeUser)
       expect(response.status).toBe(200)
-      expect(newUser.email).toBe(fakeUser.email)
-      expect(newUser.id).toBeDefined()
-    } catch (error) {
-      throw new Error(error)
-    }
+      expect(response.text).toEqual(expect.stringContaining('You are authenticated successfully'))
+    });
+
+    test('Данные не зарегистрированного ранее пользователя', async () => {
+      const fakeUser = generateUser()
+
+      const response = await server.post('/auth/login').send(fakeUser)
+
+      expect(response.error.status).toBe(500)
+    });
+
+    test('НЕ Корректные данные пользователя', async () => {
+      const fakeUser = generateUser()
+      const fakeUser2 = generateUser()
+
+      const hash = await bcrypt.hash(fakeUser.password, saltRounds)
+      await add(fakeUser.email, hash)
+
+      fakeUser.password = fakeUser2.password
+
+      const response = await server.post('/auth/login').send(fakeUser)
+      expect(response.status).toBe(500)
+    });
+
   });
-
-  describe('Получение данных о пользователе (read)', () => {
-
-  });
-
-  describe('Обновление данных пользователя (update)', () => {
-
-  });
-
-  describe('Удаление данных пользователя (delete)', () => {
-
-  });
-
 });
