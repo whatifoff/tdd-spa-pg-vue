@@ -11,15 +11,11 @@ describe('Опреации с пользователями', () => {
     test('Все данные верны - код 200', async () => {
       const fakeUser = generateUser()
 
-      try {
-        const response = await server.post('/auth/reg').send(fakeUser)
-        const newUser = JSON.parse(response.text)
-        expect(response.status).toBe(200)
-        expect(newUser.email).toBe(fakeUser.email)
-        expect(newUser.id).toBeDefined()
-      } catch (error) {
-        throw new Error(error)
-      }
+      const response = await server.post('/auth/reg').send(fakeUser)
+      const newUser = JSON.parse(response.text)
+      expect(response.status).toBe(200)
+      expect(newUser.email).toBe(fakeUser.email)
+      expect(newUser.id).toBeDefined()
     });
   });
 
@@ -32,7 +28,6 @@ describe('Опреации с пользователями', () => {
 
       const response = await server.post('/auth/login').send(fakeUser)
       expect(response.status).toBe(200)
-      expect(response.text).toEqual(expect.stringContaining('You are authenticated successfully'))
     });
 
     test('Данные не зарегистрированного ранее пользователя', async () => {

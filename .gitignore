@@ -1,2 +1,5 @@
 node_modules/
 coverage/
+client/node_modules/
+client/dist/
+client-old/

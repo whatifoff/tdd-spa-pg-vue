@@ -4,7 +4,6 @@ const saltRounds = require('../config').hash.saltRounds
 
 module.exports = {
 
-
   async userCreate(req, res, next) {
     const hash = await bcrypt.hash(req.body.password, saltRounds)
     const newUser = await dbUser.add(req.body.email, hash)
@@ -31,7 +30,7 @@ module.exports = {
           throw new Error('Password is wrong.')
         }
       } else {
-        throw new Error('User not register.')
+        throw new Error('User is not register.')
       }
     } catch (error) {
       next(error)

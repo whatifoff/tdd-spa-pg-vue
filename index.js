@@ -14,9 +14,10 @@ app.use(logger)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(router)
-app.use('/public', express.static(path.join(__dirname, 'client')))
+app.use('/', express.static(path.join(__dirname, 'client', 'dist')))
 
 app.use((err, req, res, next) => {
+  console.log(err.stack)
   res.status(500).json({
     error: true
   })

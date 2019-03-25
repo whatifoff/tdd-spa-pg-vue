@@ -13,8 +13,9 @@ describe('Работает ли сервер', () => {
     expect(response.status).toBe(404)
   });
 
-  test('При обращении на главную сервер должен отдавать страницу', async () => {
-    const response = await server.get('/')
-    expect(response.text).toContain('Welcome');
-  });
+  // test('При обращении на главную сервер должен отдавать страницу', async () => {
+  //   const response = await server.get('/')
+  //   expect(response.status).toBe(200)
+  //   expect(response.text).toContain('Welcome');
+  // });
 });
