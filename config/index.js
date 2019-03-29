@@ -14,5 +14,11 @@ module.exports = {
   },
   hash: {
     saltRounds: 10
+  },
+  token: {
+    access: {
+      // https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md#symptom-5
+      secret: `A&'/}Z57M(2hNg=;LE?~]YtRMS5(yZ<vcZTA3N-($>2j:ZeX-BGftaVk)jKP~q?,jk)EMbgt*kW'(`
+    }
   }
 }

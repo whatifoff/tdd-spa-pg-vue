@@ -17,10 +17,14 @@ app.use(router)
 app.use('/', express.static(path.join(__dirname, 'client', 'dist')))
 
 app.use((err, req, res, next) => {
-  console.log(err.stack)
-  res.status(500).json({
-    error: true
-  })
+  if (err) {
+    console.log('ErrOr InsIdE ==>>', err)
+
+    res.status(err.status || 500).json({
+      error: true,
+      message: err.message
+    })
+  }
 })
 
 if (!module.parent) {

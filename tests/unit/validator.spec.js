@@ -1,4 +1,4 @@
-const dbUser = require('../../db/user')
+const dbUser = require('../../db')
 const midwValidator = require('../../middleware/validator')
 const gen = require('../utils/generate')
 
