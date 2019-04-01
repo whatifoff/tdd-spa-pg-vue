@@ -56,9 +56,12 @@ router.post('/auth/logout', [
 
 router.get('/secret', [
   jwtMidw({ secret: jwtSecret }),
+  // midwTokens.removeOldRefreshToken,
+  // midwTokens.issueTokenPairs,
   (req, res) => {
-    res.status(200).end()
+    res.status(200).send(res.body)
   }
 ])
+
 
 module.exports = router

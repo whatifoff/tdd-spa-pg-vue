@@ -19,7 +19,8 @@
                   label="E-mail"
                   name="email"
                   required
-                  ></v-text-field>
+                  data-testid="reg-email"
+                ></v-text-field>
                 <v-text-field
                   prepend-icon="lock"
                   name="password"
@@ -29,6 +30,7 @@
                   id="password"
                   type="password"
                   required
+                  data-testid="reg-password"
                 ></v-text-field>
                 <v-text-field
                   prepend-icon="repeat"
@@ -39,6 +41,7 @@
                   id="passwordRep"
                   type="password"
                   required
+                  data-testid="reg-password-repeat"
                 ></v-text-field>
               </v-form>
             </v-card-text>
@@ -48,6 +51,7 @@
                 color="primary"
                 @click="clickRegister"
                 :disabled="!valid"
+                data-testid="btn-reg-password"
               >Register</v-btn>
             </v-card-actions>
           </v-card>

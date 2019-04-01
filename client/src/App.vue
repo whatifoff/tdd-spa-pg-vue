@@ -5,6 +5,7 @@
       v-model="snackbar"
       :top="true"
       :vertical="true"
+      data-testid="snackbar"
       >
         {{ getSnackbarText }}
         <v-btn
@@ -22,9 +23,24 @@
         </router-link>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat v-show="!getAuth" to="/auth/signin">Sign In</v-btn>
-          <v-btn flat v-show="!getAuth" to="/auth/signup">Sign Up</v-btn>
-          <v-btn flat v-show="getAuth" @click="clickLogout">Logout</v-btn>
+          <v-btn
+            flat
+            v-show="!getAuth"
+            to="/auth/signin"
+            data-testid="btn-reg-signin"
+          >Sign In</v-btn>
+          <v-btn
+            flat
+            v-show="!getAuth"
+            to="/auth/signup"
+            data-testid="btn-reg-signup"
+          >Sign Up</v-btn>
+          <v-btn
+            flat
+            v-show="getAuth"
+            @click="clickLogout"
+            data-testid="btn-reg-logout"
+          >Logout</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-content>
@@ -65,10 +81,15 @@ export default {
   methods: {
     ...mapMutations([
       'setSnackbar',
-      'setAuth'
+      'setAuth',
+      'setAccessToken',
+      'setRefreshToken'
     ]),
+    // TODO: сходить на сервер - удалить все token
     clickLogout (event) {
       this.setAuth(false)
+      this.setAccessToken(null)
+      this.setRefreshToken(null)
       this.$router.push({
         name: 'welcome'
       })

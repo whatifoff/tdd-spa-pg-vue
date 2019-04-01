@@ -38,6 +38,7 @@
                 color="primary"
                 :disabled="!valid"
                 @click="clickLogin"
+                :loading="loading"
               >Login</v-btn>
             </v-card-actions>
           </v-card>
@@ -55,6 +56,7 @@ export default {
   data () {
     return {
       valid: false,
+      loading: false,
       email: '',
       password: '',
       rulesEmail: [
@@ -71,18 +73,27 @@ export default {
     ...mapMutations([
       'setSnackbarText',
       'setSnackbar',
-      'setAuth'
+      'setAuth',
+      'setAccessToken',
+      'setRefreshToken'
     ]),
     async clickLogin (e) {
+
+      this.loading = true
+
       try {
         const response = await axios.post('http://localhost:3000/auth/login', {
           email: this.email,
           password: this.password
         })
 
+        console.log('####', response)
+
         switch (response.status) {
           case 200:
             this.setAuth(true)
+            this.setAccessToken(response.data.token)
+            this.setRefreshToken(response.data.refreshToken)
             this.$router.push({
               name: 'home'
             })
@@ -95,7 +106,9 @@ export default {
       } catch (e) {
         this.setSnackbarText(e)
         this.setSnackbar(true)
-      } finally {}
+      } finally {
+        this.loading = false
+      }
     }
   }
 }

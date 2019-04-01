@@ -7,7 +7,9 @@ export default new Vuex.Store({
   state: {
     snackbar: false,
     snackbarText: '',
-    auth: false
+    auth: false,
+    accessToken: null,
+    refreshToken: null
   },
   getters: {
     getSnackbar (state) {
@@ -18,6 +20,12 @@ export default new Vuex.Store({
     },
     getAuth (state) {
       return state.auth
+    },
+    getAccessToken (state) {
+      return state.accessToken
+    },
+    getRefreshToken (state) {
+      return state.refreshToken
     }
   },
   mutations: {
@@ -32,6 +40,12 @@ export default new Vuex.Store({
     },
     setAuth (state, status) {
       state.auth = status
+    },
+    setAccessToken (state, token) {
+      state.accessToken = token
+    },
+    setRefreshToken (state, token) {
+      state.refreshToken = token
     }
   },
   actions: {
